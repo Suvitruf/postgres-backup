@@ -1,0 +1,23 @@
+node_modules
+.idea
+.DS_Store
+coverage
+.nyc_output
+newrelic_agent\.log
+report*.json
+.env
+upload
+
+#original sources
+/lib
+
+#ts configs
+tsconfig-cjs.json
+tsconfig-esm.json
+tsconfig.json
+tslint.json
+
+#docker configs
+.dockerignore
+Dockerfile
+docker-compose.yml
