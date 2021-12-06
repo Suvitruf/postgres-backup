@@ -1,0 +1,66 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build_and_push_to_Docker_Hub:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: checkout repo
+          uses: actions/checkout@v2
+
+        - name: set up QEMU
+          uses: docker/setup-qemu-action@v1
+      
+        - name: set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: login to DockerHub
+          uses: docker/login-action@v1
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+        - name: build and push for pg 13
+          uses: docker/build-push-action@v2
+          with:
+            context: ./
+            file: ./Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/postgres-backup:13
+            build-args: |
+              PSQL_VERSION=13
+
+        - name: build and push for pg 12
+          uses: docker/build-push-action@v2
+          with:
+            context: ./
+            file: ./Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/postgres-backup:12
+            build-args: |
+              PSQL_VERSION=12
+
+        - name: build and push for pg 11
+          uses: docker/build-push-action@v2
+          with:
+            context: ./
+            file: ./Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/postgres-backup:11
+            build-args: |
+              PSQL_VERSION=11
+
+        - name: build and push for pg 10
+          uses: docker/build-push-action@v2
+          with:
+            context: ./
+            file: ./Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/postgres-backup:10
+            build-args: |
+              PSQL_VERSION=10
