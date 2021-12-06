@@ -16,6 +16,10 @@
     "start:prod": "node dist/cjs/lib/postgres-backup/cli.js",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "url": "https://github.com/Suvitruf/postgres-backup.git",
+    "type": "git"
+  },
   "dependencies": {
     "dotenv": "^10.0.0",
     "typescript": "^4.5.2",
